@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="h-full bg-slate-50">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recrutamento Executivo Global: Tech vs. Tradicional</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js & Plotly.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.24.1.min.js"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #1e293b; }
+        .chart-container { position: relative; width: 100%; max-width: 700px; margin-left: auto; margin-right: auto; height: 350px; max-height: 450px; }
+        .stat-card { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .stat-card:hover { transform: translateY(-4px); box-shadow: 0 10px 25px -5px rgba(0,0,0,0.08); }
+        .country-card { border-left: 4px solid transparent; transition: all 0.2s ease; }
+        .country-card:hover { border-left-color: #3b82f6; transform: translateY(-2px); }
+        .flow-line { height: 2px; flex-grow: 1; background: #e2e8f0; position: relative; top: 1rem; }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        /* Pulse effects for AI elements */
+        .ai-glow { box-shadow: 0 0 15px rgba(59, 130, 246, 0.3); }
+        .ai-gradient-text {
+            background: linear-gradient(135deg, #2563eb 0%, #0d9488 50%, #4f46e5 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .tab-btn.active {
+            background-color: #ffffff;
+            color: #1e293b;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            font-weight: 600;
+        }
+        
+        /* Loading audio visualizer animation */
+        @keyframes soundWave {
+            0%, 100% { height: 4px; }
+            50% { height: 20px; }
+        }
+        .wave-bar {
+            width: 3px;
+            background-color: #3b82f6;
+            border-radius: 3px;
+            animation: soundWave 1.2s infinite ease-in-out;
+        }
+        .wave-bar:nth-child(2) { animation-delay: 0.2s; }
+        .wave-bar:nth-child(3) { animation-delay: 0.4s; }
+        .wave-bar:nth-child(4) { animation-delay: 0.1s; }
+        .wave-bar:nth-child(5) { animation-delay: 0.3s; }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-full flex flex-col justify-between">
+
+<header class="bg-slate-900 text-white pt-8 pb-12 px-4 sm:px-6 shadow-xl relative overflow-hidden">
+    <div class="absolute -right-20 -top-20 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute -left-20 -bottom-20 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl pointer-events-none"></div>
+    
+    <div class="max-w-6xl mx-auto relative z-10">
+        <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-800 border border-slate-700 text-xs text-teal-400 font-medium">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> Potencializado por Gemini AI (3 Flash & TTS)
+            </div>
+            <div id="apiStatusBadge" class="text-xs px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                IA Conectada
+            </div>
+        </div>
+
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-3">
+            UX Self Coach: <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-teal-300 to-indigo-400">Domine Entrevistas de UX em Contextos Globais</span>
+        </h1>
+        <p class="text-slate-300 text-base sm:text-lg max-w-3xl font-light">
+            Treine com IA, adapte seu discurso para diferentes culturas e esteja preparado para processos seletivos nas principais empresas do mundo.
+        </p>
+
+        <!-- Dynamic Navigation Tabs -->
+        <nav class="flex flex-wrap gap-2 p-1.5 bg-slate-800/80 backdrop-blur rounded-xl border border-slate-700/80 mt-8 max-w-4xl">
+            <button onclick="switchTab('dashboard')" id="tab-dashboard" class="tab-btn active group relative flex-1 min-w-[140px] px-4 py-2.5 rounded-lg text-xs sm:text-sm text-slate-300 hover:text-white transition-all flex items-center justify-center gap-2">
+                <i class="fa-solid fa-chart-pie text-blue-400"></i> Global Hiring Insights
+                <!-- Pop-up Tooltip -->
+                <div class="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-64 sm:w-72 p-3 bg-slate-900 border border-slate-700 text-slate-200 text-xs font-normal rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 text-center leading-relaxed">
+                    Descubra como empresas recrutam profissionais de UX em oito dos principais mercados do mundo e adapte sua estratégia antes mesmo da primeira entrevista.
+                    <div class="absolute top-full left-1/2 -translate-x-1/2 border-8 border-transparent border-t-slate-900"></div>
+                </div>
+            </button>
+            <button onclick="switchTab('simulator')" id="tab-simulator" class="tab-btn group relative flex-1 min-w-[140px] px-4 py-2.5 rounded-lg text-xs sm:text-sm text-slate-300 hover:text-white transition-all flex items-center justify-center gap-2">
+                <i class="fa-solid fa-microphone-lines text-teal-400"></i> AI Interview Coach
+                <!-- Pop-up Tooltip -->
+                <div class="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-64 sm:w-72 p-3 bg-slate-900 border border-slate-700 text-slate-200 text-xs font-normal rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 text-center leading-relaxed">
+                    Pratique entrevistas em tempo real. A IA faz perguntas, avalia suas respostas, oferece feedback estruturado e mostra como um recrutador daquele país provavelmente avaliaria seu desempenho.
+                    <div class="absolute top-full left-1/2 -translate-x-1/2 border-8 border-transparent border-t-slate-900"></div>
+                </div>
+            </button>
+            <button onclick="switchTab('translator')" id="tab-translator" class="tab-btn group relative flex-1 min-w-[140px] px-4 py-2.5 rounded-lg text-xs sm:text-sm text-slate-300 hover:text-white transition-all flex items-center justify-center gap-2">
+                <i class="fa-solid fa-[#00d2ff] fa-arrows-rotate text-indigo-400"></i> Build a Career Pitch
+                <!-- Pop-up Tooltip -->
+                <div class="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-64 sm:w-72 p-3 bg-slate-900 border border-slate-700 text-slate-200 text-xs font-normal rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 text-center leading-relaxed">
+                    Transforme seu currículo em uma apresentação profissional clara, objetiva e adaptada ao estilo de comunicação esperado no país onde deseja trabalhar.
+                    <div class="absolute top-full left-1/2 -translate-x-1/2 border-8 border-transparent border-t-slate-900"></div>
+                </div>
+            </button>
+            <button onclick="switchTab('generator')" id="tab-generator" class="tab-btn group relative flex-1 min-w-[140px] px-4 py-2.5 rounded-lg text-xs sm:text-sm text-slate-300 hover:text-white transition-all flex items-center justify-center gap-2">
+                <i class="fa-solid fa-lightbulb text-amber-400"></i> Be Strategic
+                <!-- Pop-up Tooltip -->
+                <div class="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-64 sm:w-72 p-3 bg-slate-900 border border-slate-700 text-slate-200 text-xs font-normal rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 text-center leading-relaxed">
+                    Receba um plano personalizado considerando empresa, cargo e país. Descubra quais competências destacar, quais perguntas esperar e como estruturar sua preparação.
+                    <div class="absolute top-full left-1/2 -translate-x-1/2 border-8 border-transparent border-t-slate-900"></div>
+                </div>
+            </button>
+        </nav>
+    </div>
+</header>
+
+<main class="max-w-6xl mx-auto py-10 px-4 sm:px-6 flex-grow w-full">
+
+    <!-- Toast Notification Box -->
+    <div id="toastBox" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+        <div id="toastContent" class="bg-slate-900 text-white px-5 py-3.5 rounded-xl shadow-2xl border border-slate-700 flex items-center gap-3 text-sm">
+            <i id="toastIcon" class="fa-solid fa-circle-info text-blue-400 text-lg"></i>
+            <span id="toastMessage">Mensagem do sistema</span>
+        </div>
+    </div>
+
+    <!-- SECTION 1: DASHBOARD & MAP -->
+    <div id="view-dashboard" class="space-y-12">
+        
+        <!-- Structural Dimensions -->
+        <section>
+            <div class="mb-6 flex items-center justify-between">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-slate-900">Dimensões Estruturais</h2>
+                    <p class="text-slate-600 text-sm sm:text-base mt-1">A divergência metodológica entre mitigar riscos corporativos vs. escalar sob incerteza extrema.</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                <div class="stat-card bg-white p-6 rounded-2xl shadow-sm border border-slate-200/80 relative overflow-hidden">
+                    <div class="w-2 h-full bg-orange-500 absolute left-0 top-0"></div>
+                    <div class="text-xs font-bold tracking-wider text-orange-600 uppercase mb-2">SOURCING</div>
+                    <h3 class="text-lg font-bold text-slate-800 mb-2">Origem do Talento</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        <strong class="text-slate-800">Tradicional:</strong> Executive Search tradicional & redes de conselho.<br>
+                        <strong class="text-slate-800">Tech:</strong> Algoritmos IA, Redes VC & sourcing ativo via redes do produto.
+                    </p>
+                </div>
+
+                <div class="stat-card bg-white p-6 rounded-2xl shadow-sm border border-slate-200/80 relative overflow-hidden">
+                    <div class="w-2 h-full bg-blue-500 absolute left-0 top-0"></div>
+                    <div class="text-xs font-bold tracking-wider text-blue-600 uppercase mb-2">TEMPO DE CICLO</div>
+                    <h3 class="text-lg font-bold text-slate-800 mb-2">Velocidade Decisória</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        <strong class="text-slate-800">Tradicional:</strong> 12 a 24 semanas (foco em consenso e auditoria).<br>
+                        <strong class="text-slate-800">Tech:</strong> 4 a 8 semanas (foco em agilidade e momentum de mercado).
+                    </p>
+                </div>
+
+                <div class="stat-card bg-white p-6 rounded-2xl shadow-sm border border-slate-200/80 relative overflow-hidden">
+                    <div class="w-2 h-full bg-teal-500 absolute left-0 top-0"></div>
+                    <div class="text-xs font-bold tracking-wider text-teal-600 uppercase mb-2">AVALIAÇÃO</div>
+                    <h3 class="text-lg font-bold text-slate-800 mb-2">Métricas de Sucesso</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        <strong class="text-slate-800">Tradicional:</strong> Histórico comprovado de P&L e reputação.<br>
+                        <strong class="text-slate-800">Tech:</strong> Estudo de caso prático, OKRs e veto por pares/squads.
+                    </p>
+                </div>
+
+                <div class="stat-card bg-white p-6 rounded-2xl shadow-sm border border-slate-200/80 relative overflow-hidden">
+                    <div class="w-2 h-full bg-indigo-500 absolute left-0 top-0"></div>
+                    <div class="text-xs font-bold tracking-wider text-indigo-600 uppercase mb-2">COMPENSAÇÃO</div>
+                    <h3 class="text-lg font-bold text-slate-800 mb-2">Arquitetura Salarial</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        <strong class="text-slate-800">Tradicional:</strong> Salário base alto + bônus anual por metas.<br>
+                        <strong class="text-slate-800">Tech:</strong> Equity agressivo (RSUs/Options) + base competitiva.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pipeline Flowchart -->
+        <section>
+            <div class="mb-6">
+                <h2 class="text-2xl sm:text-3xl font-bold text-slate-900">Velocidade de Contratação: O Fluxo Decisório</h2>
+                <p class="text-slate-600 text-sm sm:text-base mt-1">Comparação linear dos estágios do pipeline para diretores e executivos C-Level.</p>
+            </div>
+
+            <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-200 space-y-8">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <h4 class="text-xs sm:text-sm font-bold text-slate-500 uppercase tracking-wider flex items-center gap-2">
+                            <i class="fa-solid fa-building text-slate-400"></i> Setor Tradicional (12-24 Semanas)
+                        </h4>
+                        <span class="text-xs font-semibold px-2.5 py-1 bg-slate-100 text-slate-600 rounded-full">Decisão por Comitê</span>
+                    </div>
+                    <div class="flex flex-wrap sm:flex-nowrap items-center justify-between gap-2 overflow-x-auto pb-2">
+                        <div class="flex flex-col items-center min-w-[100px] text-center">
+                            <div class="w-10 h-10 rounded-full bg-slate-800 text-white flex items-center justify-center font-bold text-sm shadow">01</div>
+                            <span class="text-xs font-medium text-slate-700 mt-2">Mapeamento Fechado</span>
+                        </div>
+                        <div class="hidden sm:block flow-line"></div>
+                        <div class="flex flex-col items-center min-w-[100px] text-center">
+                            <div class="w-10 h-10 rounded-full bg-slate-800 text-white flex items-center justify-center font-bold text-sm shadow">02</div>
+                            <span class="text-xs font-medium text-slate-700 mt-2">Validação Conselho</span>
+                        </div>
+                        <div class="hidden sm:block flow-line"></div>
+                        <div class="flex flex-col items-center min-w-[100px] text-center">
+                            <div class="w-10 h-10 rounded-full bg-slate-800 text-white flex items-center justify-center font-bold text-sm shadow">03</div>
+                            <span class="text-xs font-medium text-slate-700 mt-2">Checagem de Background</span>
+                        </div>
+                        <div class="hidden sm:block flow-line"></div>
+                        <div class="flex flex-col items-center min-w-[100px] text-center">
+                            <div class="w-10 h-10 rounded-full bg-slate-800 text-white flex items-center justify-center font-bold text-sm shadow">04</div>
+                            <span class="text-xs font-medium text-slate-700 mt-2">Aprovação Remuneração</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-6 border-t border-slate-100">
+                    <div class="flex items-center justify-between mb-4">
+                        <h4 class="text-xs sm:text-sm font-bold text-blue-600 uppercase tracking-wider flex items-center gap-2">
+                            <i class="fa-solid fa-rocket text-blue-500"></i> Ecossistema de Tecnologia (4-8 Semanas)
+                        </h4>
+                        <span class="text-xs font-semibold px-2.5 py-1 bg-blue-50 text-blue-600 rounded-full">Decisão Orientada por Evidências</span>
+                    </div>
+                    <div class="flex flex-wrap sm:flex-nowrap items-center justify-between gap-2 overflow-x-auto pb-2">
+                        <div class="flex flex-col items-center min-w-[100px] text-center">
+                            <div class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-sm shadow">01</div>
+                            <span class="text-xs font-medium text-slate-700 mt-2">Algoritmo / Sourcing</span>
+                        </div>
+                        <div class="hidden sm:block flow-line bg-blue-200"></div>
+                        <div class="flex flex-col items-center min-w-[100px] text-center">
+                            <div class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-sm shadow">02</div>
+                            <span class="text-xs font-medium text-slate-700 mt-2">Estudo de Caso Prático</span>
+                        </div>
+                        <div class="hidden sm:block flow-line bg-blue-200"></div>
+                        <div class="flex flex-col items-center min-w-[100px] text-center">
+                            <div class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-sm shadow">03</div>
+                            <span class="text-xs font-medium text-slate-700 mt-2">Veto por Pares (Squads)</span>
+                        </div>
+                        <div class="hidden sm:block flow-line bg-blue-200"></div>
+                        <div class="flex flex-col items-center min-w-[100px] text-center">
+                            <div class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-sm shadow">04</div>
+                            <span class="text-xs font-medium text-slate-700 mt-2">Oferta Equity/RSU</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Charts Grid -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                <h3 class="text-lg font-bold text-slate-800 mb-1 text-center">Foco de Avaliação: Prioridades de Liderança</h3>
+                <p class="text-xs text-slate-500 mb-6 text-center">Perfil de competências mais valorizado por tipo de empresa</p>
+                <div class="chart-container">
+                    <canvas id="radarChart"></canvas>
+                </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                <h3 class="text-lg font-bold text-slate-800 mb-1 text-center">Composição da Oferta Salarial (%)</h3>
+                <p class="text-xs text-slate-500 mb-6 text-center">Distribuição entre fixo, variável e ações de capital</p>
+                <div class="chart-container">
+                    <canvas id="barChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Country Atlas Grid -->
+        <section>
+            <div class="mb-8 flex flex-wrap items-end justify-between gap-4">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-slate-900">Atlas Global: Perguntas Reais & Estratégia</h2>
+                    <p class="text-slate-600 text-sm sm:text-base mt-1">Clique em qualquer país para abrir o simulador interativo de perguntas com áudio IA.</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" id="countryGrid">
+                <!-- Country cards dynamically loaded/rendered below -->
+            </div>
+        </section>
+
+        <!-- Career Transition Matrix -->
+        <section class="bg-slate-900 rounded-3xl p-6 sm:p-10 text-white relative overflow-hidden shadow-2xl">
+            <div class="absolute right-0 top-0 w-80 h-80 bg-teal-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            <h3 class="text-2xl font-bold mb-6 flex items-center gap-3">
+                <i class="fa-solid fa-arrows-split-up-and-left text-teal-400"></i> Matriz de Transição de Carreira
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-slate-800/90 p-6 rounded-2xl border border-slate-700/80">
+                    <h4 class="text-teal-400 font-bold mb-3 uppercase text-xs tracking-widest flex items-center gap-2">
+                        <i class="fa-solid fa-arrow-right-long"></i> Do Tradicional para Tecnologia
+                    </h4>
+                    <ul class="space-y-3 text-xs sm:text-sm text-slate-300">
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-circle-check text-teal-400 mt-1"></i>
+                            <span>Recalibre a narrativa de "Gestão de Orçamentos" para "Alocação Eficiente sob Incerteza".</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-circle-check text-teal-400 mt-1"></i>
+                            <span>Elimine jargões burocráticos; demonstre familiaridade prática com dados e métricas de produto.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-circle-check text-teal-400 mt-1"></i>
+                            <span>Substitua o histórico linear por exemplos de agilidade e capacidade de pivotar estratégias.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="bg-slate-800/90 p-6 rounded-2xl border border-slate-700/80">
+                    <h4 class="text-amber-400 font-bold mb-3 uppercase text-xs tracking-widest flex items-center gap-2">
+                        <i class="fa-solid fa-arrow-right-long"></i> Da Tecnologia para Tradicional
+                    </h4>
+                    <ul class="space-y-3 text-xs sm:text-sm text-slate-300">
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-circle-check text-amber-400 mt-1"></i>
+                            <span>Evidencie responsabilidade fiduciária e profundo respeito por governança e controle de riscos.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-circle-check text-amber-400 mt-1"></i>
+                            <span>Traduza conceitos técnicos em impactos mensuráveis no P&L e no retorno sobre capital empregado.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-circle-check text-amber-400 mt-1"></i>
+                            <span>Demonstre paciência institucional para alinhar visões com conselhos e comitês estatutários.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Plotly Chart -->
+        <section>
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-slate-900">Métricas de Suporte à Decisão</h2>
+                <p class="text-slate-600 text-sm">Distribuição estocástica: Agilidade vs Estabilidade por ecossistema país.</p>
+            </div>
+            <div id="plotlyChart" class="w-full bg-white p-4 sm:p-6 rounded-2xl shadow-sm border border-slate-200 h-[450px]"></div>
+        </section>
+    </div>
+
+    <!-- SECTION 2: AI INTERVIEW SIMULATOR -->
+    <div id="view-simulator" class="hidden space-y-8">
+        <div class="bg-gradient-to-r from-slate-900 via-slate-800 to-indigo-950 p-6 sm:p-8 rounded-3xl text-white shadow-xl relative overflow-hidden">
+            <div class="max-w-3xl">
+                <span class="px-3 py-1 bg-teal-500/20 text-teal-300 rounded-full text-xs font-semibold uppercase tracking-wider border border-teal-500/30">
+                    <i class="fa-solid fa-robot mr-1"></i> Simulador em Tempo Real
+                </span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold mt-3">Simulador de Entrevista Executiva IA</h2>
+                <p class="text-slate-300 text-xs sm:text-sm mt-2">
+                    Escolha o país, o setor e a função de liderança. O recrutador virtual alimentado pela Gemini gerará uma pergunta autêntica com nuances culturais locais. Ouça a pergunta em voz alta e submeta sua resposta para avaliação técnica.
+                </p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Setup Column -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-5 h-fit">
+                <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                    <i class="fa-solid fa-sliders text-blue-600"></i> Configuração da Sessão
+                </h3>
+
+                <div>
+                    <label class="block text-xs font-bold uppercase text-slate-600 mb-1.5">País do Recrutador</label>
+                    <select id="simCountry" class="w-full p-3 bg-slate-50 border border-slate-300 rounded-xl text-sm font-medium focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                        <option value="Brasil">🇧🇷 Brasil</option>
+                        <option value="EUA">🇺🇸 EUA (United States)</option>
+                        <option value="Alemanha">🇩🇪 Alemanha (Deutschland)</option>
+                        <option value="México">🇲🇽 México</option>
+                        <option value="China">🇨🇳 China</option>
+                        <option value="Japão">🇯🇵 Japão (Nippon)</option>
+                        <option value="Reino Unido">🇬🇧 Reino Unido (UK)</option>
+                        <option value="Austrália">🇦🇺 Austrália</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold uppercase text-slate-600 mb-1.5">Setor de Atuação</label>
+                    <select id="simSector" class="w-full p-3 bg-slate-50 border border-slate-300 rounded-xl text-sm font-medium focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                        <option value="Tech">🚀 Tecnologia / Big Tech / Scale-up</option>
+                        <option value="Tradicional">🏢 Setor Tradicional / Industrial / Multinacional Secular</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold uppercase text-slate-600 mb-1.5">Cargo Pretendido</label>
+                    <input type="text" id="simRole" value="Lead UX / Product Designer" class="w-full p-3 bg-slate-50 border border-slate-300 rounded-xl text-sm font-medium focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Ex: Lead UX Designer, UX Research Manager, Staff Product Designer">
+                </div>
+
+                <button onclick="generateAIQuestion()" id="btnGenQuestion" class="w-full py-3.5 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl transition-all shadow-md flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-bolt"></i> Gerar Pergunta do Recrutador
+                </button>
+            </div>
+
+            <!-- Workspace Column -->
+            <div class="lg:col-span-2 space-y-6">
+                <!-- Question Card -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 relative">
+                    <div class="flex items-center justify-between mb-3">
+                        <span id="questionBadge" class="text-xs font-bold px-3 py-1 bg-blue-100 text-blue-700 rounded-full">
+                            Aguardando Configuração
+                        </span>
+                        <button onclick="playRecruiterAudio()" id="btnPlayAudio" disabled class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 disabled:opacity-50 text-xs font-medium rounded-lg transition-all flex items-center gap-2">
+                            <i class="fa-solid fa-volume-high text-blue-600"></i>
+                            <span>Ouvir Voz IA (TTS)</span>
+                        </button>
+                    </div>
+
+                    <!-- Audio Visualizer Loading state -->
+                    <div id="audioVisualizer" class="hidden my-2 flex items-center gap-1 h-6">
+                        <span class="text-xs text-blue-600 font-medium mr-2">Sintetizando voz do recrutador...</span>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                    </div>
+
+                    <p id="questionText" class="text-slate-800 font-semibold text-lg leading-relaxed italic">
+                        "Clique no botão ao lado para iniciar a simulação e gerar a pergunta do recrutador executivo..."
+                    </p>
+
+                    <div id="culturalContextHint" class="mt-4 pt-3 border-t border-slate-100 text-xs text-slate-500 hidden">
+                        <strong class="text-slate-700"><i class="fa-solid fa-earth-americas"></i> Contexto Cultural Esperado:</strong> <span id="culturalContextBody"></span>
+                    </div>
+                </div>
+
+                <!-- Response Box -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
+                    <label class="block text-sm font-bold text-slate-800">Sua Resposta de Liderança (Simulação)</label>
+                    <textarea id="userAnswerText" rows="5" class="w-full p-4 bg-slate-50 border border-slate-300 rounded-xl text-sm leading-relaxed focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Estruture sua resposta usando STAR (Situação, Tarefa, Ação, Resultado) ou OKRs de impacto de negócios..."></textarea>
+
+                    <div class="flex items-center justify-between gap-4">
+                        <button onclick="evaluateUserAnswer()" id="btnEvaluate" disabled class="py-3 px-6 bg-teal-600 hover:bg-teal-700 disabled:opacity-50 text-white font-semibold rounded-xl transition-all shadow-md flex items-center gap-2">
+                            <i class="fa-solid fa-check-double"></i> Avaliar Minha Resposta com IA
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Feedback Display Box -->
+                <div id="feedbackContainer" class="hidden bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-6">
+                    <div class="flex items-center justify-between border-b pb-4">
+                        <h4 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                            <i class="fa-solid fa-square-poll-vertical text-teal-600"></i> Relatório de Avaliação Executiva
+                        </h4>
+                        <div class="text-right">
+                            <span class="text-xs text-slate-500 font-medium">Nota de Adequação</span>
+                            <div id="feedbackScore" class="text-3xl font-black text-blue-600">0/100</div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-100">
+                            <h5 class="text-xs font-bold uppercase text-emerald-800 mb-2 flex items-center gap-1">
+                                <i class="fa-solid fa-thumbs-up"></i> Pontos Fortes
+                            </h5>
+                            <ul id="feedbackStrengths" class="text-xs text-emerald-950 space-y-1.5 list-disc list-inside"></ul>
+                        </div>
+
+                        <div class="bg-amber-50 p-4 rounded-xl border border-amber-100">
+                            <h5 class="text-xs font-bold uppercase text-amber-800 mb-2 flex items-center gap-1">
+                                <i class="fa-solid fa-triangle-exclamation"></i> Oportunidades de Ajuste
+                            </h5>
+                            <ul id="feedbackWeaknesses" class="text-xs text-amber-950 space-y-1.5 list-disc list-inside"></ul>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <h5 class="text-xs font-bold uppercase text-slate-700 mb-2">Exemplo de Resposta Benchmark de Alto Impacto</h5>
+                        <p id="feedbackModelAnswer" class="text-xs text-slate-700 italic leading-relaxed"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 3: CAREER & PITCH TRANSLATOR -->
+    <div id="view-translator" class="hidden space-y-8">
+        <div class="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 p-6 sm:p-8 rounded-3xl text-white shadow-xl">
+            <span class="px-3 py-1 bg-indigo-500/20 text-indigo-300 rounded-full text-xs font-semibold uppercase tracking-wider border border-indigo-500/30">
+                <i class="fa-solid fa-language mr-1"></i> Tradutor do Dialeto Corporativo
+            </span>
+            <h2 class="text-2xl sm:text-3xl font-extrabold mt-3">Tradutor de Currículo & Pitch Cross-Sector</h2>
+            <p class="text-slate-300 text-xs sm:text-sm mt-2">
+                Converta suas realizações executivas do setor tradicional para a linguagem do mercado tech (ou vice-versa) adaptando métricas, palavras-chave e posicionamento fiduciário/agilidade para o país desejado.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Input Form -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-5">
+                <h3 class="text-lg font-bold text-slate-900">1. Dados da Sua Experiência</h3>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Direção da Transição</label>
+                        <select id="transDirection" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs font-semibold">
+                            <option value="TradToTech">Tradicional ➔ Tech</option>
+                            <option value="TechToTrad">Tech ➔ Tradicional</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-slate-600 mb-1">País-Alvo</label>
+                        <select id="transTargetCountry" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs font-semibold">
+                            <option value="EUA">🇺🇸 EUA</option>
+                            <option value="Brasil">🇧🇷 Brasil</option>
+                            <option value="Alemanha">🇩🇪 Alemanha</option>
+                            <option value="Reino Unido">🇬🇧 Reino Unido</option>
+                            <option value="Japão">🇯🇵 Japão</option>
+                            <option value="México">🇲🇽 México</option>
+                            <option value="China">🇨🇳 China</option>
+                            <option value="Austrália">🇦🇺 Austrália</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold uppercase text-slate-600 mb-1">Resumo do seu Histórico Profissional</label>
+                    <textarea id="transCurrentExperience" rows="5" class="w-full p-3 bg-slate-50 border border-slate-300 rounded-xl text-xs sm:text-sm leading-relaxed" placeholder="Ex: Atuei por 5 anos como Pesquisador de Mercado / UX Researcher tradicional em agência. Conduzi mais de 40 estudos qualitativos, testes de usabilidade e benchmarks, entregando relatórios para grandes marcas..."></textarea>
+                </div>
+
+                <button onclick="translateCareerPitch()" id="btnTranslatePitch" class="w-full py-3 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl transition-all shadow flex items-center justify-center gap-2 text-sm">
+                    <i class="fa-solid fa-wand-magic"></i> Traduzir Experiência & Gerar Pitch
+                </button>
+            </div>
+
+            <!-- Output Display -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-6">
+                <div class="flex items-center justify-between border-b pb-3">
+                    <h3 class="text-lg font-bold text-slate-900">2. Re-enquadramento Estratégico</h3>
+                    <span id="transStatusBadge" class="text-xs px-2.5 py-1 bg-slate-100 text-slate-600 rounded-full font-medium">Pronto para processar</span>
+                </div>
+
+                <div id="transResults" class="space-y-5 text-xs sm:text-sm">
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <span class="text-xs font-bold uppercase text-indigo-600">Elevator Pitch Re-escrito (30 Segundos)</span>
+                        <p id="outPitch" class="mt-2 text-slate-700 italic leading-relaxed">
+                            O pitch recalibrado aparecerá aqui após o processamento...
+                        </p>
+                    </div>
+
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <span class="text-xs font-bold uppercase text-indigo-600 mb-2 block">Realizações em UX Research Traduzidas</span>
+                        <div id="outBullets" class="space-y-2 text-slate-700">
+                            <p class="text-slate-400 italic">Bullets traduzidos aparecerão aqui...</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-amber-50 p-4 rounded-xl border border-amber-200">
+                        <span class="text-xs font-bold uppercase text-amber-800 mb-1 block">Armadilhas & Vícios a Evitar</span>
+                        <p id="outRedFlags" class="text-amber-950 italic leading-relaxed">Dicas e alertas socioculturais do mercado de destino aparecerão aqui...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 4: STRATEGIC BLUEPRINT GENERATOR -->
+    <div id="view-generator" class="hidden space-y-8">
+        <div class="bg-gradient-to-r from-slate-900 via-amber-950 to-slate-900 p-6 sm:p-8 rounded-3xl text-white shadow-xl">
+            <span class="px-3 py-1 bg-amber-500/20 text-amber-300 rounded-full text-xs font-semibold uppercase tracking-wider border border-amber-500/30">
+                <i class="fa-solid fa-lightbulb mr-1"></i> Be Strategic
+            </span>
+            <h2 class="text-2xl sm:text-3xl font-extrabold mt-3">Plano Estratégico & Dossiê de Recrutamento</h2>
+            <p class="text-slate-300 text-xs sm:text-sm mt-2">
+                Receba um plano personalizado considerando empresa, cargo e país. Descubra quais competências destacar, quais perguntas esperar e como estruturar sua preparação.
+            </p>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Empresa / Perfil Alvo</label>
+                    <input type="text" id="genCompany" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm" placeholder="Ex: Nubank, Google, BMW, Mercado Livre">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 uppercase mb-1">País / Região</label>
+                    <input type="text" id="genLocation" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm" placeholder="Ex: Brasil, EUA, Alemanha, Remoto Global">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Posição / Cargo em UX Research</label>
+                    <input type="text" id="genRole" class="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm" placeholder="Ex: Lead UX Researcher, Staff UXR, Research Ops Lead">
+                </div>
+            </div>
+
+            <button onclick="generateCustomDossier()" id="btnGenDossier" class="py-3 px-6 bg-slate-900 hover:bg-slate-800 text-white font-semibold rounded-xl text-sm transition-all shadow flex items-center gap-2">
+                <i class="fa-solid fa-sparkles text-amber-400"></i> Gerar Dossiê de Recrutamento Completo
+            </button>
+
+            <!-- Output Container -->
+            <div id="dossierResult" class="hidden pt-6 border-t border-slate-200 space-y-6">
+                <h3 id="dossierTitle" class="text-xl font-bold text-slate-900"></h3>
+                <div id="dossierContent" class="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs sm:text-sm"></div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<footer class="bg-white border-t border-slate-200 py-8 mt-12 text-center text-slate-400 text-xs">
+    <div class="max-w-6xl mx-auto px-6 flex flex-wrap justify-between items-center gap-4">
+        <p>© 2026 Análise de Recrutamento Global. Todos os direitos reservados.</p>
+        <p class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-blue-500"></span> Gemini 3 Flash Preview & 2.5 Flash TTS Integrated
+        </p>
+    </div>
+</footer>
+
+<script>
+    /* API SETUP & GLOBAL STATE */
+    // Com a Serverless Function na Vercel, a API Key não é mais necessária no front-end.
+    const apiKey = ""; 
+
+    // 8 Countries Static Benchmark Knowledge Base tailored for UX, Product Design & UX Research
+    const countryData = [
+        {
+            id: 'Brasil', flag: '🇧🇷', name: 'BRASIL',
+            tradQuestion: '"Como você defende o valor do investimento em UX, Design de Experiência e UX Research para diretores tradicionais focados estritamente em ROI de curto prazo?"',
+            techQuestion: '"Como você equilibra decisões de Product Design, Design Systems e Discovery com métricas quantitativas (PLG, NPS) e pesquisas em sprints quinzenais?"',
+            strategy: 'Trad: Foco em evangelização de UX, diplomacia com stakeholders e prototipagem de valor. Tech: Foco em métricas de produto, autonomia, Design Systems e agilidade em Discovery/Research.'
+        },
+        {
+            id: 'EUA', flag: '🇺🇸', name: 'EUA',
+            tradQuestion: '"Walk me through a UX & Design Strategy initiative where your findings or design decisions challenged executive consensus and how you managed the fallout."',
+            techQuestion: '"How do you leverage product design architecture, continuous user research, and mixed-methods at scale to directly influence product roadmap OKRs?"',
+            strategy: 'Use o método STAR rigoroso quantificando o impacto de UX e UX Research na conversão, retenção e eficiência no ciclo de engenharia.'
+        },
+        {
+            id: 'Alemanha', flag: '🇩🇪', name: 'ALEMANHA',
+            tradQuestion: '"Wie stellen Sie die Einhaltung von Accessibility (Barrierefreiheit), DSGVO und Design-Standards in komplexen Unternehmensarchitekturen sicher?"',
+            techQuestion: '"How do you structure design systems and user testing protocols that balance strict German data privacy with rapid generative research and prototyping?"',
+            strategy: 'Demonstre rigor metodológico, ética inegociável em acessibilidade/proteção de dados e documentação impecável da arquitetura de UX.'
+        },
+        {
+            id: 'México', flag: '🇲🇽', name: 'MÉXICO',
+            tradQuestion: '"¿Cómo adapta los procesos de UX y Design Thinking para usuarios con baja alfabetización digital en mercados tradicionales?"',
+            techQuestion: '"¿Cómo lidera equipos de Product Design y UX Research cross-border para productos de nearshoring atendiendo a EE.UU. y LatAm?"',
+            strategy: 'Mostre sensibilidade sociocultural e inclusão na criação de interfaces/pesquisas (Trad) ou capacidade de escalar design B2B/B2C multilíngue (Tech).'
+        },
+        {
+            id: 'China', flag: '🇨🇳', name: 'CHINA',
+            tradQuestion: '"Como você alinha decisões de UX/UI e Product Design com as diretrizes de compliance estatal e ecossistemas de super-apps (WeChat/Alipay)?"',
+            techQuestion: '"Como executa iterações de Product Design, testes A/B e triangulação de dados na velocidade extrema do ciclo de desenvolvimento diário (996)?"',
+            strategy: 'Alinhamento com ecossistemas locais, design focado em alta densidade de informação e capacidade de entregar protótipos e pesquisas em questão de horas.'
+        },
+        {
+            id: 'Japão', flag: '🇯🇵', name: 'JAPÃO',
+            tradQuestion: '"Como utiliza protótipos de UX e achados de pesquisa para alcançar consenso (Nemawashi) com executivos seniores antes de alterar o produto?"',
+            techQuestion: '"Como desenha rotas de UX e conduz entrevistas considerando a menor disposição dos usuários locais em dar feedback negativo direto?"',
+            strategy: 'Foco na leitura de microinterações, testes indiretos/observacionais (Nemawashi) e alto respeito às convenções estéticas e de etiqueta locais.'
+        },
+        {
+            id: 'Reino Unido', flag: '🇬🇧', name: 'REINO UNIDO',
+            tradQuestion: '"How do you ensure WCAG accessibility compliance and inclusive product design practices across diverse UK demographic segments?"',
+            techQuestion: '"How do you measure the business impact of generative UX Research vs evaluative Product Design iterations in a high-velocity Fintech product?"',
+            strategy: 'Sobriedade analítica, forte apelo para acessibilidade universal, sistemas de design inclusivos e rigor na triangulação de dados de uso.'
+        },
+        {
+            id: 'Austrália', flag: 'AU', name: 'AUSTRÁLIA',
+            tradQuestion: '"How do you conduct ethical user research and inclusive UX design involving remote or indigenous populations in compliance with ESG standards?"',
+            techQuestion: '"How do you build a scalable design system and self-serve UX Research toolset so product teams can iterate safely?"',
+            strategy: 'Pragmatismo em democratização de pesquisa e sistemas de design (Tech) e aderência estrita a padrões éticos e diversidade sociocultural (Trad).'
+        }
+    ];
+
+    let currentGeneratedAudioBase64 = null;
+
+    function showToast(message, type = 'info') {
+        const toastBox = document.getElementById('toastBox');
+        const toastMessage = document.getElementById('toastMessage');
+        const toastIcon = document.getElementById('toastIcon');
+
+        toastMessage.innerText = message;
+        if (type === 'error') {
+            toastIcon.className = 'fa-solid fa-triangle-exclamation text-rose-400 text-lg';
+        } else if (type === 'success') {
+            toastIcon.className = 'fa-solid fa-circle-check text-emerald-400 text-lg';
+        } else {
+            toastIcon.className = 'fa-solid fa-circle-info text-blue-400 text-lg';
+        }
+
+        toastBox.classList.remove('translate-y-20', 'opacity-0');
+        setTimeout(() => {
+            toastBox.classList.add('translate-y-20', 'opacity-0');
+        }, 4000);
+    }
+
+    function switchTab(tabId) {
+        ['dashboard', 'simulator', 'translator', 'generator'].forEach(id => {
+            const view = document.getElementById(`view-${id}`);
+            const btn = document.getElementById(`tab-${id}`);
+            if (view) {
+                if (id === tabId) {
+                    view.classList.remove('hidden');
+                } else {
+                    view.classList.add('hidden');
+                }
+            }
+            if (btn) {
+                if (id === tabId) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            }
+        });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    async function fetchGeminiAPI(endpoint, payload, retries = 3, delay = 1000) {
+        // Redireciona a chamada para o proxy backend seguro na Vercel
+        const apiUrl = `/api/gemini`;
+        
+        for (let i = 0; i < retries; i++) {
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        model: endpoint,
+                        payload: payload
+                    })
+                });
+                if (!response.ok) {
+                    throw new Error(`HTTP Error ${response.status}`);
+                }
+                const data = await response.json();
+                return data;
+            } catch (err) {
+                if (i === retries - 1) throw err;
+                await new Promise(res => setTimeout(res, delay * Math.pow(2, i)));
+            }
+        }
+    }
+
+    async function generateAIQuestion() {
+        const country = document.getElementById('simCountry').value;
+        const sector = document.getElementById('simSector').value;
+        const role = document.getElementById('simRole').value || 'UX / Product Lead';
+
+        const btn = document.getElementById('btnGenQuestion');
+        btn.disabled = true;
+        btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> Gerando Pergunta...`;
+
+        const prompt = `Você é um Recrutador Especializado em Liderança de UX, Product Design e UX Research (Headhunter / VP of Design / Design Ops Lead) atuando no seguinte mercado: ${country}, no setor de ${sector}.
+        Você está entrevistando um candidato para a posição de UX/Design: "${role}".
+        Gere UMA pergunta de entrevista extremamente realista, culturalmente precisa para ${country}, equilibrando a visão abrangente de UX, Product Design, Design Strategy e Design Systems com o rigor e métodos específicos de UX Research no setor ${sector}.
+        
+        Responda obrigatoriamente no seguinte formato JSON estrito:
+        {
+            "questionText": "A pergunta exata do recrutador (na língua falada nas entrevistas do país ou português com os termos técnicos locais de UX/Product Design/Research)",
+            "culturalContext": "Explicação em 1 frase sobre a razão cultural/organizacional desta pergunta para profissionais de UX & Design no país ${country}"
+        }`;
+
+        try {
+            const data = await fetchGeminiAPI('gemini-3-flash-preview:generateContent', {
+                contents: [{ parts: [{ text: prompt }] }],
+                generationConfig: {
+                    responseMimeType: "application/json",
+                    responseSchema: {
+                        type: "OBJECT",
+                        properties: {
+                            questionText: { type: "STRING" },
+                            culturalContext: { type: "STRING" }
+                        },
+                        required: ["questionText", "culturalContext"]
+                    }
+                }
+            });
+
+            const jsonText = data.candidates?.[0]?.content?.parts?.[0]?.text;
+            if (jsonText) {
+                const parsed = JSON.parse(jsonText);
+                document.getElementById('questionText').innerText = `"${parsed.questionText}"`;
+                document.getElementById('culturalContextBody').innerText = parsed.culturalContext;
+                document.getElementById('culturalContextHint').classList.remove('hidden');
+                document.getElementById('questionBadge').innerText = `${country} • ${sector}`;
+                
+                document.getElementById('btnEvaluate').disabled = false;
+                document.getElementById('btnPlayAudio').disabled = false;
+                currentGeneratedAudioBase64 = null; // Reset audio
+                
+                showToast("Nova pergunta de UX & Design gerada!", "success");
+            }
+        } catch (err) {
+            console.error(err);
+            showToast("Erro ao gerar pergunta com a Gemini API. Tente novamente.", "error");
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = `<i class="fa-solid fa-bolt"></i> Gerar Pergunta do Recrutador`;
+        }
+    }
+
+    async function playRecruiterAudio() {
+        const questionText = document.getElementById('questionText').innerText;
+        if (!questionText || questionText.includes("Clique no botão")) return;
+
+        const visualizer = document.getElementById('audioVisualizer');
+        const playBtn = document.getElementById('btnPlayAudio');
+        visualizer.classList.remove('hidden');
+        playBtn.disabled = true;
+
+        try {
+            const payload = {
+                contents: [{
+                    parts: [{ text: `Fale como um recrutador executivo em tom profissional e direto: ${questionText}` }]
+                }],
+                generationConfig: {
+                    responseModalities: ["AUDIO"],
+                    speechConfig: {
+                        voiceConfig: { prebuiltVoiceConfig: { voiceName: "Kore" } }
+                    }
+                }
+            };
+
+            const data = await fetchGeminiAPI('gemini-2.5-flash-preview-tts:generateContent', payload);
+            const part = data?.candidates?.[0]?.content?.parts?.[0];
+            const audioData = part?.inlineData?.data;
+            const mimeType = part?.inlineData?.mimeType;
+
+            if (audioData && mimeType) {
+                const sampleRateMatch = mimeType.match(/rate=(\d+)/);
+                const sampleRate = sampleRateMatch ? parseInt(sampleRateMatch[1], 10) : 24000;
+                
+                const pcmBuffer = base64ToArrayBuffer(audioData);
+                const pcm16 = new Int16Array(pcmBuffer);
+                const wavBlob = pcmToWav(pcm16, sampleRate);
+                const audioUrl = URL.createObjectURL(wavBlob);
+                
+                const audio = new Audio(audioUrl);
+                audio.play();
+                showToast("Reproduzindo voz sintetizada do recrutador...", "info");
+            } else {
+                showToast("Áudio não disponível no momento.", "error");
+            }
+        } catch (err) {
+            console.error(err);
+            showToast("Erro ao sintetizar voz do recrutador.", "error");
+        } finally {
+            visualizer.classList.add('hidden');
+            playBtn.disabled = false;
+        }
+    }
+
+    /* PCM TO WAV AUDIO CONVERTER HELPERS */
+    function base64ToArrayBuffer(base64) {
+        const binaryString = window.atob(base64);
+        const len = binaryString.length;
+        const bytes = new Uint8Array(len);
+        for (let i = 0; i < len; i++) {
+            bytes[i] = binaryString.charCodeAt(i);
+        }
+        return bytes.buffer;
+    }
+
+    function pcmToWav(pcm16, sampleRate) {
+        const numChannels = 1;
+        const bytesPerSample = 2;
+        const blockAlign = numChannels * bytesPerSample;
+        const byteRate = sampleRate * blockAlign;
+        const dataSize = pcm16.length * bytesPerSample;
+        const buffer = new ArrayBuffer(44 + dataSize);
+        const view = new DataView(buffer);
+
+        const writeString = (v, offset, str) => {
+            for (let i = 0; i < str.length; i++) v.setUint8(offset + i, str.charCodeAt(i));
+        };
+
+        writeString(view, 0, 'RIFF');
+        view.setUint32(4, 36 + dataSize, true);
+        writeString(view, 8, 'WAVE');
+        writeString(view, 12, 'fmt ');
+        view.setUint32(16, 16, true);
+        view.setUint16(20, 1, true);
+        view.setUint16(22, numChannels, true);
+        view.setUint32(24, sampleRate, true);
+        view.setUint32(28, byteRate, true);
+        view.setUint16(32, blockAlign, true);
+        view.setUint16(34, 16, true);
+        writeString(view, 36, 'data');
+        view.setUint32(40, dataSize, true);
+
+        for (let i = 0; i < pcm16.length; i++) {
+            view.setInt16(44 + i * 2, pcm16[i], true);
+        }
+        return new Blob([buffer], { type: 'audio/wav' });
+    }
+
+    async function evaluateUserAnswer() {
+        const question = document.getElementById('questionText').innerText;
+        const answer = document.getElementById('userAnswerText').value;
+        const country = document.getElementById('simCountry').value;
+        const sector = document.getElementById('simSector').value;
+
+        if (!answer.trim()) {
+            showToast("Por favor, digite sua resposta para ser avaliada.", "error");
+            return;
+        }
+
+        const btn = document.getElementById('btnEvaluate');
+        btn.disabled = true;
+        btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> Avaliando com IA...`;
+
+        const prompt = `Aja como um UX & Product Design Director / Head de UX avaliando uma resposta de um candidato a posições de UX/Design/Research.
+        País: ${country} | Setor: ${sector}
+        Pergunta feita ao candidato: "${question}"
+        Resposta fornecida pelo candidato: "${answer}"
+
+        Forneça uma avaliação crítica abrangente cobrindo:
+        1. Estratégia de UX & Product Design (visão centrada no usuário, Design Systems, facilitação de Discovery, visão de negócio);
+        2. Rigor de UX Research (métodos qual/quant, triangulação de dados, ética e amostragem);
+        3. Fit Cultural e de Liderança (comunicação com stakeholders de Produto, Engenharia e C-Level no país ${country}).
+
+        Retorne um JSON estrito:
+        {
+            "score": 85, (número de 0 a 100)
+            "strengths": ["ponto forte de UX/Design Strategy 1", "ponto forte de pesquisa ou liderança 2"],
+            "weaknesses": ["oportunidade de melhoria em UX/Design 1", "oportunidade em pesquisa ou visão de produto 2"],
+            "modelAnswer": "Exemplo de resposta ideal e concisa alinhando visão geral de UX/Design e rigor de UX Research com impacto nos negócios."
+        }`;
+
+        try {
+            const data = await fetchGeminiAPI('gemini-3-flash-preview:generateContent', {
+                contents: [{ parts: [{ text: prompt }] }],
+                generationConfig: {
+                    responseMimeType: "application/json",
+                    responseSchema: {
+                        type: "OBJECT",
+                        properties: {
+                            score: { type: "NUMBER" },
+                            strengths: { type: "ARRAY", items: { type: "STRING" } },
+                            weaknesses: { type: "ARRAY", items: { type: "STRING" } },
+                            modelAnswer: { type: "STRING" }
+                        },
+                        required: ["score", "strengths", "weaknesses", "modelAnswer"]
+                    }
+                }
+            });
+
+            const jsonText = data.candidates?.[0]?.content?.parts?.[0]?.text;
+            if (jsonText) {
+                const res = JSON.parse(jsonText);
+                document.getElementById('feedbackScore').innerText = `${res.score}/100`;
+                
+                const strUl = document.getElementById('feedbackStrengths');
+                strUl.innerHTML = res.strengths.map(s => `<li>${s}</li>`).join('');
+
+                const weakUl = document.getElementById('feedbackWeaknesses');
+                weakUl.innerHTML = res.weaknesses.map(w => `<li>${w}</li>`).join('');
+
+                document.getElementById('feedbackModelAnswer').innerText = `"${res.modelAnswer}"`;
+                document.getElementById('feedbackContainer').classList.remove('hidden');
+
+                showToast("Avaliação executiva de UX/Design concluída!", "success");
+            }
+        } catch (err) {
+            console.error(err);
+            showToast("Erro na avaliação. Tente novamente.", "error");
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = `<i class="fa-solid fa-check-double"></i> Avaliar Minha Resposta com IA`;
+        }
+    }
+
+    async function translateCareerPitch() {
+        const direction = document.getElementById('transDirection').value;
+        const country = document.getElementById('transTargetCountry').value;
+        const exp = document.getElementById('transCurrentExperience').value;
+
+        if (!exp.trim()) {
+            showToast("Por favor, descreva seu histórico profissional.", "error");
+            return;
+        }
+
+        const btn = document.getElementById('btnTranslatePitch');
+        btn.disabled = true;
+        btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> Processando...`;
+
+        const prompt = `Você é um Especialista em Posicionamento de Carreira em UX, Product Design e UX Research Strategy.
+        Direção da Transição: ${direction === 'TradToTech' ? 'De Design/Pesquisa Tradicional ou Agência para UX & Product Design em Tech / Scale-up' : 'De UX & Product Design em Tech para Setor Tradicional / Industrial'}
+        País Alvo: ${country}
+        Histórico Profissional do Candidato: "${exp}"
+
+        Traduza e re-enquadre esta experiência para que soe atraente para recrutadores e lideranças de UX, Produto e Design no mercado de destino (${country}). Equilibre a narrativa entre capacidade de entrega em Product Design / UX e capacidade analítica/metodológica em UX Research.
+        Retorne um JSON estrito:
+        {
+            "elevatorPitch": "Um pitch verbal impactante de 30 segundos em português focado na transição profissional em UX & Design.",
+            "translatedBullets": [
+                "Realização de UX / Product Design traduzida com jargões e métricas do mercado de destino",
+                "Realização de UX Research traduzida com impacto de produto",
+                "Realização de Liderança / Design Systems / Strategy traduzida"
+            ],
+            "redFlagsToAvoid": "Principais vícios de linguagem ou armadilhas socioculturais a evitar ao falar com recrutadores de UX/Design em ${country}."
+        }`;
+
+        try {
+            const data = await fetchGeminiAPI('gemini-3-flash-preview:generateContent', {
+                contents: [{ parts: [{ text: prompt }] }],
+                generationConfig: {
+                    responseMimeType: "application/json",
+                    responseSchema: {
+                        type: "OBJECT",
+                        properties: {
+                            elevatorPitch: { type: "STRING" },
+                            translatedBullets: { type: "ARRAY", items: { type: "STRING" } },
+                            redFlagsToAvoid: { type: "STRING" }
+                        },
+                        required: ["elevatorPitch", "translatedBullets", "redFlagsToAvoid"]
+                    }
+                }
+            });
+
+            const jsonText = data.candidates?.[0]?.content?.parts?.[0]?.text;
+            if (jsonText) {
+                const res = JSON.parse(jsonText);
+                document.getElementById('outPitch').innerText = `"${res.elevatorPitch}"`;
+                
+                const bulletsDiv = document.getElementById('outBullets');
+                bulletsDiv.innerHTML = res.translatedBullets.map(b => `<p class="p-2.5 bg-slate-50 border border-slate-200 rounded-lg flex items-start gap-2"><i class="fa-solid fa-angle-right text-indigo-500 mt-0.5"></i> ${b}</p>`).join('');
+
+                document.getElementById('outRedFlags').innerText = res.redFlagsToAvoid;
+                document.getElementById('transStatusBadge').innerText = "Tradução Concluída";
+                document.getElementById('transStatusBadge').className = "text-xs px-2.5 py-1 bg-emerald-100 text-emerald-700 rounded-full font-medium";
+
+                showToast("Pitch e histórico traduzidos para UX & Design!", "success");
+            }
+        } catch (err) {
+            console.error(err);
+            showToast("Erro na tradução. Tente novamente.", "error");
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = `<i class="fa-solid fa-wand-magic"></i> Traduzir Experiência & Gerar Pitch`;
+        }
+    }
+
+    async function generateCustomDossier() {
+        const company = document.getElementById('genCompany').value || 'Multinacional';
+        const location = document.getElementById('genLocation').value || 'Global';
+        const role = document.getElementById('genRole').value || 'Lead UX / Product Designer';
+
+        const btn = document.getElementById('btnGenDossier');
+        btn.disabled = true;
+        btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> Sintetizando Dossiê...`;
+
+        const prompt = `Gere um Dossiê Estratégico de Recrutamento para a posição de UX/Design ("${role}") na empresa/perfil "${company}" em "${location}".
+        Retorne um JSON estrito cobrindo tanto a estratégia de UX / Product Design quanto o pilar de UX Research:
+        {
+            "dossierTitle": "Título do Dossiê para UX & Product Design",
+            "keyDrivers": "Três principais prioridades de UX, Product Design, Design Systems e UX Research buscadas nesta contratação.",
+            "topQuestions": ["Pergunta chave de UX / Design Strategy 1", "Pergunta chave de UX Research / Métodos 2", "Pergunta chave de Liderança / Stakeholders 3"],
+            "compensationTrend": "Tendência de estrutura salarial, senioridade e equity esperados para este perfil neste contexto."
+        }`;
+
+        try {
+            const data = await fetchGeminiAPI('gemini-3-flash-preview:generateContent', {
+                contents: [{ parts: [{ text: prompt }] }],
+                generationConfig: {
+                    responseMimeType: "application/json",
+                    responseSchema: {
+                        type: "OBJECT",
+                        properties: {
+                            dossierTitle: { type: "STRING" },
+                            keyDrivers: { type: "STRING" },
+                            topQuestions: { type: "ARRAY", items: { type: "STRING" } },
+                            compensationTrend: { type: "STRING" }
+                        },
+                        required: ["dossierTitle", "keyDrivers", "topQuestions", "compensationTrend"]
+                    }
+                }
+            });
+
+            const jsonText = data.candidates?.[0]?.content?.parts?.[0]?.text;
+            if (jsonText) {
+                const res = JSON.parse(jsonText);
+                document.getElementById('dossierTitle').innerText = res.dossierTitle;
+                
+                const container = document.getElementById('dossierContent');
+                container.innerHTML = `
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <strong class="text-slate-800 uppercase text-xs block mb-2">Drivers de UX & Design Strategy</strong>
+                        <p class="text-slate-600 leading-relaxed">${res.keyDrivers}</p>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <strong class="text-slate-800 uppercase text-xs block mb-2">Perguntas Cruciais dos Avaliadores</strong>
+                        <ul class="list-disc list-inside space-y-1 text-slate-600">
+                            ${res.topQuestions.map(q => `<li>${q}</li>`).join('')}
+                        </ul>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <strong class="text-slate-800 uppercase text-xs block mb-2">Arquitetura de Compensação & Mercado</strong>
+                        <p class="text-slate-600 leading-relaxed">${res.compensationTrend}</p>
+                    </div>
+                `;
+                document.getElementById('dossierResult').classList.remove('hidden');
+                showToast("Dossiê customizado de UX & Design gerado!", "success");
+            }
+        } catch (err) {
+            console.error(err);
+            showToast("Erro ao gerar dossiê customizado.", "error");
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = `<i class="fa-solid fa-sparkles text-amber-400"></i> Gerar Dossiê de Recrutamento Completo`;
+        }
+    }
+
+    function renderCountryGrid() {
+        const grid = document.getElementById('countryGrid');
+        grid.innerHTML = countryData.map(c => `
+            <div class="country-card bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
+                <div>
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="text-2xl">${c.flag}</span>
+                        <span class="text-xs font-bold px-2.5 py-1 bg-slate-100 text-slate-700 rounded-full">${c.name}</span>
+                    </div>
+                    <div class="mb-3">
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Tradicional / Secular</p>
+                        <p class="text-xs italic text-slate-700 leading-tight mt-0.5">${c.tradQuestion}</p>
+                    </div>
+                    <div class="mb-3">
+                        <p class="text-[10px] font-bold text-blue-500 uppercase tracking-wider">Tecnologia / Scale-up</p>
+                        <p class="text-xs italic text-slate-700 leading-tight mt-0.5">${c.techQuestion}</p>
+                    </div>
+                </div>
+                <div>
+                    <div class="pt-3 border-t border-slate-100 mb-3">
+                        <p class="text-[10px] font-bold text-slate-800">ESTRATÉGIA:</p>
+                        <p class="text-[11px] text-slate-600 leading-snug">${c.strategy}</p>
+                    </div>
+                    <button onclick="launchCountrySimulation('${c.id}')" class="w-full py-2 bg-slate-50 hover:bg-blue-50 text-blue-600 border border-slate-200 hover:border-blue-200 rounded-xl text-xs font-semibold transition-all flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-robot"></i> Simular Entrevista IA
+                    </button>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function launchCountrySimulation(countryId) {
+        document.getElementById('simCountry').value = countryId;
+        switchTab('simulator');
+        generateAIQuestion();
+    }
+
+    window.onload = function() {
+        renderCountryGrid();
+
+        // Label Wrapping Helper for Charts
+        const wrapLabel = (label) => {
+            if (typeof label !== 'string') return label;
+            if (label.length <= 16) return label;
+            const words = label.split(' ');
+            const lines = [];
+            let currentLine = '';
+            words.forEach(word => {
+                if ((currentLine + word).length > 16) {
+                    lines.push(currentLine.trim());
+                    currentLine = word + ' ';
+                } else {
+                    currentLine += word + ' ';
+                }
+            });
+            lines.push(currentLine.trim());
+            return lines;
+        };
+
+        const tooltipOptions = {
+            callbacks: {
+                title: function(tooltipItems) {
+                    const item = tooltipItems[0];
+                    let label = item.chart.data.labels[item.dataIndex];
+                    return Array.isArray(label) ? label.join(' ') : label;
+                }
+            }
+        };
+
+        // Chart.js: Radar Comparison
+        const radarCtx = document.getElementById('radarChart').getContext('2d');
+        new Chart(radarCtx, {
+            type: 'radar',
+            data: {
+                labels: [
+                    wrapLabel('Governança Corporativa'),
+                    wrapLabel('Velocidade de Execução'),
+                    wrapLabel('Gestão de Riscos'),
+                    wrapLabel('Orientação a Dados'),
+                    wrapLabel('Estabilidade P&L'),
+                    wrapLabel('Inovação de Produto')
+                ],
+                datasets: [{
+                    label: 'Empresas Tradicionais',
+                    data: [95, 40, 90, 50, 95, 45],
+                    backgroundColor: 'rgba(30, 58, 138, 0.2)',
+                    borderColor: '#1e3a8a',
+                    pointBackgroundColor: '#1e3a8a',
+                    borderWidth: 2
+                }, {
+                    label: 'Empresas de Tecnologia',
+                    data: [50, 95, 55, 95, 60, 98],
+                    backgroundColor: 'rgba(45, 212, 191, 0.2)',
+                    borderColor: '#2dd4bf',
+                    pointBackgroundColor: '#2dd4bf',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    tooltip: tooltipOptions,
+                    legend: { position: 'bottom' }
+                },
+                scales: {
+                    r: {
+                        angleLines: { display: true },
+                        suggestedMin: 0,
+                        suggestedMax: 100
+                    }
+                }
+            }
+        });
+
+        // Chart.js: Salary Composition
+        const barCtx = document.getElementById('barChart').getContext('2d');
+        new Chart(barCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Tecnologia', 'Tradicional'],
+                datasets: [
+                    {
+                        label: 'Salário Base',
+                        data: [40, 70],
+                        backgroundColor: '#1e3a8a'
+                    },
+                    {
+                        label: 'Bônus Variável',
+                        data: [20, 25],
+                        backgroundColor: '#3b82f6'
+                    },
+                    {
+                        label: 'Equity / RSUs',
+                        data: [40, 5],
+                        backgroundColor: '#2dd4bf'
+                    }
+                ]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: { stacked: true, max: 100 },
+                    y: { stacked: true }
+                },
+                plugins: {
+                    tooltip: tooltipOptions,
+                    legend: { position: 'bottom' }
+                }
+            }
+        });
+
+        // Plotly.js: Complex Statistical Summary
+        const plotlyData = [
+            {
+                type: 'scatter',
+                mode: 'markers+text',
+                x: [25, 30, 40, 45, 65, 75, 90, 95],
+                y: [95, 92, 85, 78, 45, 35, 15, 15],
+                text: ['EUA (Tech)', 'China (Tech)', 'Brasil (Tech)', 'México (Tech)', 'Brasil (T)', 'EUA (T)', 'Japão (T)', 'Alemanha (T)'],
+                textposition: 'top center',
+                marker: {
+                    size: [30, 32, 26, 24, 16, 18, 20, 22],
+                    color: ['#2dd4bf', '#2dd4bf', '#2dd4bf', '#2dd4bf', '#1e3a8a', '#1e3a8a', '#1e3a8a', '#1e3a8a'],
+                    opacity: 0.8
+                }
+            }
+        ];
+
+        const plotlyLayout = {
+            title: 'Distribuição Global: Agilidade vs Estabilidade',
+            xaxis: { title: 'Índice de Estabilidade / Governança' },
+            yaxis: { title: 'Índice de Agilidade / Inovação' },
+            margin: { t: 50, b: 50, l: 50, r: 50 },
+            plot_bgcolor: 'rgba(0,0,0,0)',
+            paper_bgcolor: 'rgba(0,0,0,0)',
+            render: 'canvas'
+        };
+
+        Plotly.newPlot('plotlyChart', plotlyData, plotlyLayout, {responsive: true});
+    };
+</script>
+
+</body>
+</html>
