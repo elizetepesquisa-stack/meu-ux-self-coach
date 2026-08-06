@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recrutamento Executivo Global: Tech vs. Tradicional</title>
+    <title>UX Self Coach: Domine Entrevistas de UX em Contextos Globais</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Chart.js & Plotly.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.plot.ly/plotly-2.24.1.min.js"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js" crossorigin="anonymous"></script>
     <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -90,7 +89,6 @@
         <nav class="flex flex-wrap gap-2 p-1.5 bg-slate-800/80 backdrop-blur rounded-xl border border-slate-700/80 mt-8 max-w-4xl">
             <button onclick="switchTab('dashboard')" id="tab-dashboard" class="tab-btn active group relative flex-1 min-w-[140px] px-4 py-2.5 rounded-lg text-xs sm:text-sm text-slate-300 hover:text-white transition-all flex items-center justify-center gap-2">
                 <i class="fa-solid fa-chart-pie text-blue-400"></i> Global Hiring Insights
-                <!-- Pop-up Tooltip -->
                 <div class="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-64 sm:w-72 p-3 bg-slate-900 border border-slate-700 text-slate-200 text-xs font-normal rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 text-center leading-relaxed">
                     Descubra como empresas recrutam profissionais de UX em oito dos principais mercados do mundo e adapte sua estratégia antes mesmo da primeira entrevista.
                     <div class="absolute top-full left-1/2 -translate-x-1/2 border-8 border-transparent border-t-slate-900"></div>
@@ -98,15 +96,13 @@
             </button>
             <button onclick="switchTab('simulator')" id="tab-simulator" class="tab-btn group relative flex-1 min-w-[140px] px-4 py-2.5 rounded-lg text-xs sm:text-sm text-slate-300 hover:text-white transition-all flex items-center justify-center gap-2">
                 <i class="fa-solid fa-microphone-lines text-teal-400"></i> AI Interview Coach
-                <!-- Pop-up Tooltip -->
                 <div class="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-64 sm:w-72 p-3 bg-slate-900 border border-slate-700 text-slate-200 text-xs font-normal rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 text-center leading-relaxed">
                     Pratique entrevistas em tempo real. A IA faz perguntas, avalia suas respostas, oferece feedback estruturado e mostra como um recrutador daquele país provavelmente avaliaria seu desempenho.
                     <div class="absolute top-full left-1/2 -translate-x-1/2 border-8 border-transparent border-t-slate-900"></div>
                 </div>
             </button>
             <button onclick="switchTab('translator')" id="tab-translator" class="tab-btn group relative flex-1 min-w-[140px] px-4 py-2.5 rounded-lg text-xs sm:text-sm text-slate-300 hover:text-white transition-all flex items-center justify-center gap-2">
-                <i class="fa-solid fa-[#00d2ff] fa-arrows-rotate text-indigo-400"></i> Build a Career Pitch
-                <!-- Pop-up Tooltip -->
+                <i class="fa-solid fa-arrows-rotate text-indigo-400"></i> Build a Career Pitch
                 <div class="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-64 sm:w-72 p-3 bg-slate-900 border border-slate-700 text-slate-200 text-xs font-normal rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 text-center leading-relaxed">
                     Transforme seu currículo em uma apresentação profissional clara, objetiva e adaptada ao estilo de comunicação esperado no país onde deseja trabalhar.
                     <div class="absolute top-full left-1/2 -translate-x-1/2 border-8 border-transparent border-t-slate-900"></div>
@@ -114,7 +110,6 @@
             </button>
             <button onclick="switchTab('generator')" id="tab-generator" class="tab-btn group relative flex-1 min-w-[140px] px-4 py-2.5 rounded-lg text-xs sm:text-sm text-slate-300 hover:text-white transition-all flex items-center justify-center gap-2">
                 <i class="fa-solid fa-lightbulb text-amber-400"></i> Be Strategic
-                <!-- Pop-up Tooltip -->
                 <div class="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-64 sm:w-72 p-3 bg-slate-900 border border-slate-700 text-slate-200 text-xs font-normal rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 text-center leading-relaxed">
                     Receba um plano personalizado considerando empresa, cargo e país. Descubra quais competências destacar, quais perguntas esperar e como estruturar sua preparação.
                     <div class="absolute top-full left-1/2 -translate-x-1/2 border-8 border-transparent border-t-slate-900"></div>
@@ -134,7 +129,7 @@
         </div>
     </div>
 
-    <!-- SECTION 1: DASHBOARD & MAP -->
+    <!-- SECTION 1: DASHBOARD -->
     <div id="view-dashboard" class="space-y-12">
         
         <!-- Structural Dimensions -->
@@ -288,7 +283,7 @@
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" id="countryGrid">
-                <!-- Country cards dynamically loaded/rendered below -->
+                <!-- Country cards dynamically loaded -->
             </div>
         </section>
 
@@ -341,13 +336,101 @@
             </div>
         </section>
 
-        <!-- Plotly Chart -->
-        <section>
-            <div class="mb-6">
-                <h2 class="text-2xl font-bold text-slate-900">Métricas de Suporte à Decisão</h2>
-                <p class="text-slate-600 text-sm">Distribuição estocástica: Agilidade vs Estabilidade por ecossistema país.</p>
+        <!-- Matriz de Comparações Salariais Globais -->
+        <section class="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200 space-y-6">
+            <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 pb-5">
+                <div>
+                    <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-xs font-semibold text-emerald-700 mb-2">
+                        <i class="fa-solid fa-coins"></i> Benchmarking de Remuneração Executiva & Liderança
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-slate-900">Matriz de Comparações Salariais Globais</h2>
+                    <p class="text-slate-600 text-sm mt-1">Estimativas de compensação anual total (Base + Bônus + Equity/RSUs) para posições de liderança em UX, Product Design e UX Research nos 8 mercados estudados.</p>
+                </div>
+                <div class="flex items-center gap-2 bg-slate-100 p-1.5 rounded-xl text-xs font-semibold">
+                    <button onclick="toggleSalaryRole('lead')" id="btnSalaryLead" class="px-4 py-2 rounded-lg bg-white text-slate-900 shadow-sm transition-all font-bold">Senior Lead / Staff IC</button>
+                    <button onclick="toggleSalaryRole('head')" id="btnSalaryHead" class="px-4 py-2 rounded-lg text-slate-600 hover:text-slate-900 transition-all font-normal">Head / Director of UX</button>
+                </div>
             </div>
-            <div id="plotlyChart" class="w-full bg-white p-4 sm:p-6 rounded-2xl shadow-sm border border-slate-200 h-[450px]"></div>
+
+            <!-- Table Matrix -->
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse text-xs sm:text-sm">
+                    <thead>
+                        <tr class="border-b border-slate-200 text-slate-500 uppercase font-semibold text-[11px] tracking-wider bg-slate-50/80">
+                            <th class="py-3.5 px-4 rounded-l-xl">País & Mercado</th>
+                            <th class="py-3.5 px-4">Moeda Local (Ano)</th>
+                            <th class="py-3.5 px-4">Equivalente USD ($)</th>
+                            <th class="py-3.5 px-4">Mix de Remuneração (Base / Variável / Equity)</th>
+                            <th class="py-3.5 px-4 rounded-r-xl">Estrutura de Benefícios / Incentivos</th>
+                        </tr>
+                    </thead>
+                    <tbody id="salaryTableBody" class="divide-y divide-slate-100 font-medium text-slate-700">
+                        <!-- Populated dynamically via JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Verified Sources & Links -->
+            <div class="pt-6 border-t border-slate-100 bg-slate-50/60 p-5 rounded-2xl border border-slate-200/80">
+                <div class="flex items-center justify-between flex-wrap gap-2 mb-3">
+                    <h4 class="text-xs font-bold uppercase text-slate-700 tracking-wider flex items-center gap-2">
+                        <i class="fa-solid fa-arrow-up-right-from-square text-blue-600"></i> Fontes Verificadas das Comparações Salariais
+                    </h4>
+                    <span class="text-[11px] text-slate-500 italic"><i class="fa-regular fa-calendar-check mr-1"></i> Todas as fontes foram consultadas em <strong>Agosto de 2026</strong></span>
+                </div>
+                <p class="text-xs text-slate-600 mb-4 leading-relaxed">
+                    Clique nos links abaixo para verificar os relatórios originais de remuneração e benchmarkings metodológicos utilizados na matriz acima:
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-xs">
+                    <a href="https://www.userinterviews.com/ux-salary-report" target="_blank" rel="noopener noreferrer" class="p-3 bg-white rounded-xl border border-slate-200 hover:border-blue-400 hover:shadow-xs transition-all flex items-start justify-between group">
+                        <div>
+                            <span class="font-bold text-slate-800 block group-hover:text-blue-600 flex items-center gap-1">User Interviews UX Salary Report <i class="fa-solid fa-external-link text-[10px] text-slate-400"></i></span>
+                            <span class="text-[11px] text-slate-500">Relatório Global de Salários UXR & Design</span>
+                        </div>
+                        <span class="text-[10px] font-semibold text-slate-500 bg-slate-100 px-2 py-0.5 rounded">Agosto/2026</span>
+                    </a>
+
+                    <a href="https://www.levels.fyi/t/product-designer/focus/user-research" target="_blank" rel="noopener noreferrer" class="p-3 bg-white rounded-xl border border-slate-200 hover:border-blue-400 hover:shadow-xs transition-all flex items-start justify-between group">
+                        <div>
+                            <span class="font-bold text-slate-800 block group-hover:text-blue-600 flex items-center gap-1">Levels.fyi Compensation Index <i class="fa-solid fa-external-link text-[10px] text-slate-400"></i></span>
+                            <span class="text-[11px] text-slate-500">Dados de Tech em Tempo Real (EUA, EU, JP, AU)</span>
+                        </div>
+                        <span class="text-[10px] font-semibold text-slate-400 bg-slate-100 px-2 py-0.5 rounded">Agosto/2026</span>
+                    </a>
+
+                    <a href="https://www.glassdoor.com" target="_blank" rel="noopener noreferrer" class="p-3 bg-white rounded-xl border border-slate-200 hover:border-blue-400 hover:shadow-xs transition-all flex items-start justify-between group">
+                        <div>
+                            <span class="font-bold text-slate-800 block group-hover:text-blue-600 flex items-center gap-1">Glassdoor Economic Research <i class="fa-solid fa-external-link text-[10px] text-slate-400"></i></span>
+                            <span class="text-[11px] text-slate-500">Média Global de Total Pay & Bônus</span>
+                        </div>
+                        <span class="text-[10px] font-semibold text-slate-400 bg-slate-100 px-2 py-0.5 rounded">Agosto/2026</span>
+                    </a>
+
+                    <a href="https://www.roberthalf.com.br/guia-salarial" target="_blank" rel="noopener noreferrer" class="p-3 bg-white rounded-xl border border-slate-200 hover:border-blue-400 hover:shadow-xs transition-all flex items-start justify-between group">
+                        <div>
+                            <span class="font-bold text-slate-800 block group-hover:text-blue-600 flex items-center gap-1">Guia Salarial Robert Half Brasil <i class="fa-solid fa-external-link text-[10px] text-slate-400"></i></span>
+                            <span class="text-[11px] text-slate-500">Mercado Executivo & Tech em LatAm</span>
+                        </div>
+                        <span class="text-[10px] font-semibold text-slate-400 bg-slate-100 px-2 py-0.5 rounded">Agosto/2026</span>
+                    </a>
+
+                    <a href="https://www.michaelpage.com" target="_blank" rel="noopener noreferrer" class="p-3 bg-white rounded-xl border border-slate-200 hover:border-blue-400 hover:shadow-xs transition-all flex items-start justify-between group">
+                        <div>
+                            <span class="font-bold text-slate-800 block group-hover:text-blue-600 flex items-center gap-1">Michael Page Executive Survey <i class="fa-solid fa-external-link text-[10px] text-slate-400"></i></span>
+                            <span class="text-[11px] text-slate-500">Pesquisas Salariais México, Ásia & Europa</span>
+                        </div>
+                        <span class="text-[10px] font-semibold text-slate-400 bg-slate-100 px-2 py-0.5 rounded">Agosto/2026</span>
+                    </a>
+
+                    <a href="https://www.hays.com" target="_blank" rel="noopener noreferrer" class="p-3 bg-white rounded-xl border border-slate-200 hover:border-blue-400 hover:shadow-xs transition-all flex items-start justify-between group">
+                        <div>
+                            <span class="font-bold text-slate-800 block group-hover:text-blue-600 flex items-center gap-1">Hays Salary Guide (UK, AU & APAC) <i class="fa-solid fa-external-link text-[10px] text-slate-400"></i></span>
+                            <span class="text-[11px] text-slate-500">Relatório Salarial de Tecnologia e Design</span>
+                        </div>
+                        <span class="text-[10px] font-semibold text-slate-400 bg-slate-100 px-2 py-0.5 rounded">Agosto/2026</span>
+                    </a>
+                </div>
+            </div>
         </section>
     </div>
 
@@ -597,7 +680,7 @@
             </div>
 
             <button onclick="generateCustomDossier()" id="btnGenDossier" class="py-3 px-6 bg-slate-900 hover:bg-slate-800 text-white font-semibold rounded-xl text-sm transition-all shadow flex items-center gap-2">
-                <i class="fa-solid fa-sparkles text-amber-400"></i> Gerar Dossiê de Recrutamento Completo
+                <i class="fa-solid fa-wand-magic-sparkles text-amber-400"></i> Gerar Dossiê de Recrutamento Completo
             </button>
 
             <!-- Output Container -->
@@ -620,11 +703,6 @@
 </footer>
 
 <script>
-    /* API SETUP & GLOBAL STATE */
-    // Com a Serverless Function na Vercel, a API Key não é mais necessária no front-end.
-    const apiKey = ""; 
-
-    // 8 Countries Static Benchmark Knowledge Base tailored for UX, Product Design & UX Research
     const countryData = [
         {
             id: 'Brasil', flag: '🇧🇷', name: 'BRASIL',
@@ -676,12 +754,12 @@
         }
     ];
 
-    let currentGeneratedAudioBase64 = null;
-
     function showToast(message, type = 'info') {
         const toastBox = document.getElementById('toastBox');
         const toastMessage = document.getElementById('toastMessage');
         const toastIcon = document.getElementById('toastIcon');
+
+        if (!toastBox || !toastMessage || !toastIcon) return;
 
         toastMessage.innerText = message;
         if (type === 'error') {
@@ -721,7 +799,6 @@
     }
 
     async function fetchGeminiAPI(endpoint, payload, retries = 3, delay = 1000) {
-        // Redireciona a chamada para o proxy backend seguro na Vercel
         const apiUrl = `/api/gemini`;
         
         for (let i = 0; i < retries; i++) {
@@ -755,14 +832,14 @@
         btn.disabled = true;
         btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> Gerando Pergunta...`;
 
-        const prompt = `Você é um Recrutador Especializado em Liderança de UX, Product Design e UX Research (Headhunter / VP of Design / Design Ops Lead) atuando no seguinte mercado: ${country}, no setor de ${sector}.
+        const prompt = `Você é um Recrutador Especializado em Liderança de UX, Product Design e UX Research atuando no seguinte mercado: ${country}, no setor de ${sector}.
         Você está entrevistando um candidato para a posição de UX/Design: "${role}".
         Gere UMA pergunta de entrevista extremamente realista, culturalmente precisa para ${country}, equilibrando a visão abrangente de UX, Product Design, Design Strategy e Design Systems com o rigor e métodos específicos de UX Research no setor ${sector}.
         
         Responda obrigatoriamente no seguinte formato JSON estrito:
         {
-            "questionText": "A pergunta exata do recrutador (na língua falada nas entrevistas do país ou português com os termos técnicos locais de UX/Product Design/Research)",
-            "culturalContext": "Explicação em 1 frase sobre a razão cultural/organizacional desta pergunta para profissionais de UX & Design no país ${country}"
+            "questionText": "A pergunta exata do recrutador",
+            "culturalContext": "Explicação em 1 frase sobre a razão cultural desta pergunta para profissionais de UX & Design no país ${country}"
         }`;
 
         try {
@@ -791,7 +868,6 @@
                 
                 document.getElementById('btnEvaluate').disabled = false;
                 document.getElementById('btnPlayAudio').disabled = false;
-                currentGeneratedAudioBase64 = null; // Reset audio
                 
                 showToast("Nova pergunta de UX & Design gerada!", "success");
             }
@@ -841,7 +917,7 @@
                 const audioUrl = URL.createObjectURL(wavBlob);
                 
                 const audio = new Audio(audioUrl);
-                audio.play();
+                audio.play().catch(e => console.error("Erro na reprodução do áudio:", e));
                 showToast("Reproduzindo voz sintetizada do recrutador...", "info");
             } else {
                 showToast("Áudio não disponível no momento.", "error");
@@ -855,7 +931,6 @@
         }
     }
 
-    /* PCM TO WAV AUDIO CONVERTER HELPERS */
     function base64ToArrayBuffer(base64) {
         const binaryString = window.atob(base64);
         const len = binaryString.length;
@@ -914,22 +989,17 @@
         btn.disabled = true;
         btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> Avaliando com IA...`;
 
-        const prompt = `Aja como um UX & Product Design Director / Head de UX avaliando uma resposta de um candidato a posições de UX/Design/Research.
+        const prompt = `Aja como um UX & Product Design Director avaliando a resposta de um candidato.
         País: ${country} | Setor: ${sector}
-        Pergunta feita ao candidato: "${question}"
-        Resposta fornecida pelo candidato: "${answer}"
-
-        Forneça uma avaliação crítica abrangente cobrindo:
-        1. Estratégia de UX & Product Design (visão centrada no usuário, Design Systems, facilitação de Discovery, visão de negócio);
-        2. Rigor de UX Research (métodos qual/quant, triangulação de dados, ética e amostragem);
-        3. Fit Cultural e de Liderança (comunicação com stakeholders de Produto, Engenharia e C-Level no país ${country}).
+        Pergunta: "${question}"
+        Resposta: "${answer}"
 
         Retorne um JSON estrito:
         {
-            "score": 85, (número de 0 a 100)
-            "strengths": ["ponto forte de UX/Design Strategy 1", "ponto forte de pesquisa ou liderança 2"],
-            "weaknesses": ["oportunidade de melhoria em UX/Design 1", "oportunidade em pesquisa ou visão de produto 2"],
-            "modelAnswer": "Exemplo de resposta ideal e concisa alinhando visão geral de UX/Design e rigor de UX Research com impacto nos negócios."
+            "score": 85,
+            "strengths": ["ponto forte 1", "ponto forte 2"],
+            "weaknesses": ["oportunidade 1", "oportunidade 2"],
+            "modelAnswer": "Exemplo de resposta ideal e concisa."
         }`;
 
         try {
@@ -989,21 +1059,20 @@
         btn.disabled = true;
         btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> Processando...`;
 
-        const prompt = `Você é um Especialista em Posicionamento de Carreira em UX, Product Design e UX Research Strategy.
-        Direção da Transição: ${direction === 'TradToTech' ? 'De Design/Pesquisa Tradicional ou Agência para UX & Product Design em Tech / Scale-up' : 'De UX & Product Design em Tech para Setor Tradicional / Industrial'}
+        const prompt = `Você é um Especialista em Posicionamento de Carreira em UX.
+        Direção: ${direction}
         País Alvo: ${country}
-        Histórico Profissional do Candidato: "${exp}"
+        Histórico: "${exp}"
 
-        Traduza e re-enquadre esta experiência para que soe atraente para recrutadores e lideranças de UX, Produto e Design no mercado de destino (${country}). Equilibre a narrativa entre capacidade de entrega em Product Design / UX e capacidade analítica/metodológica em UX Research.
         Retorne um JSON estrito:
         {
-            "elevatorPitch": "Um pitch verbal impactante de 30 segundos em português focado na transição profissional em UX & Design.",
+            "elevatorPitch": "Um pitch verbal impactante de 30 segundos em português.",
             "translatedBullets": [
-                "Realização de UX / Product Design traduzida com jargões e métricas do mercado de destino",
-                "Realização de UX Research traduzida com impacto de produto",
-                "Realização de Liderança / Design Systems / Strategy traduzida"
+                "Realização 1",
+                "Realização 2",
+                "Realização 3"
             ],
-            "redFlagsToAvoid": "Principais vícios de linguagem ou armadilhas socioculturais a evitar ao falar com recrutadores de UX/Design em ${country}."
+            "redFlagsToAvoid": "Principais alertas socioculturais a evitar."
         }`;
 
         try {
@@ -1055,13 +1124,13 @@
         btn.disabled = true;
         btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> Sintetizando Dossiê...`;
 
-        const prompt = `Gere um Dossiê Estratégico de Recrutamento para a posição de UX/Design ("${role}") na empresa/perfil "${company}" em "${location}".
-        Retorne um JSON estrito cobrindo tanto a estratégia de UX / Product Design quanto o pilar de UX Research:
+        const prompt = `Gere um Dossiê Estratégico para a posição "${role}" na empresa "${company}" em "${location}".
+        Retorne um JSON estrito:
         {
-            "dossierTitle": "Título do Dossiê para UX & Product Design",
-            "keyDrivers": "Três principais prioridades de UX, Product Design, Design Systems e UX Research buscadas nesta contratação.",
-            "topQuestions": ["Pergunta chave de UX / Design Strategy 1", "Pergunta chave de UX Research / Métodos 2", "Pergunta chave de Liderança / Stakeholders 3"],
-            "compensationTrend": "Tendência de estrutura salarial, senioridade e equity esperados para este perfil neste contexto."
+            "dossierTitle": "Título do Dossiê",
+            "keyDrivers": "Três principais prioridades do cargo.",
+            "topQuestions": ["Pergunta 1", "Pergunta 2", "Pergunta 3"],
+            "compensationTrend": "Tendência salarial."
         }`;
 
         try {
@@ -1094,13 +1163,13 @@
                         <p class="text-slate-600 leading-relaxed">${res.keyDrivers}</p>
                     </div>
                     <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
-                        <strong class="text-slate-800 uppercase text-xs block mb-2">Perguntas Cruciais dos Avaliadores</strong>
+                        <strong class="text-slate-800 uppercase text-xs block mb-2">Perguntas Cruciais</strong>
                         <ul class="list-disc list-inside space-y-1 text-slate-600">
                             ${res.topQuestions.map(q => `<li>${q}</li>`).join('')}
                         </ul>
                     </div>
                     <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
-                        <strong class="text-slate-800 uppercase text-xs block mb-2">Arquitetura de Compensação & Mercado</strong>
+                        <strong class="text-slate-800 uppercase text-xs block mb-2">Arquitetura de Compensação</strong>
                         <p class="text-slate-600 leading-relaxed">${res.compensationTrend}</p>
                     </div>
                 `;
@@ -1112,12 +1181,13 @@
             showToast("Erro ao gerar dossiê customizado.", "error");
         } finally {
             btn.disabled = false;
-            btn.innerHTML = `<i class="fa-solid fa-sparkles text-amber-400"></i> Gerar Dossiê de Recrutamento Completo`;
+            btn.innerHTML = `<i class="fa-solid fa-wand-magic-sparkles text-amber-400"></i> Gerar Dossiê de Recrutamento Completo`;
         }
     }
 
     function renderCountryGrid() {
         const grid = document.getElementById('countryGrid');
+        if (!grid) return;
         grid.innerHTML = countryData.map(c => `
             <div class="country-card bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
                 <div>
@@ -1153,151 +1223,159 @@
         generateAIQuestion();
     }
 
+    const salaryData = {
+        lead: [
+            { flag: '🇺🇸', name: 'Estados Unidos', local: '$140.000 – $210.000 USD', usd: '$140k – $210k', mix: '50% Base / 15% Bônus / 35% RSUs', perks: 'RSUs de 4 anos, 401(k) match de até 6%, seguro saúde integral' },
+            { flag: '🇩🇪', name: 'Alemanha', local: '€85.000 – €125.000 EUR', usd: '$92k – $135k', mix: '75% Base / 15% Variável / 10% ESOP', perks: 'Plano de aposentadoria de empresa, subsídio transporte, seguro de vida' },
+            { flag: '🇬🇧', name: 'Reino Unido', local: '£75.000 – £115.000 GBP', usd: '$95k – $145k', mix: '70% Base / 15% Variável / 15% Equity', perks: 'Pensão privada com match, Private Medical Insurance, car allowance' },
+            { flag: '🇦🇺', name: 'Austrália', local: '$135.000 – $195.000 AUD', usd: '$88k – $128k', mix: '80% Base / 10% Superannuation / 10% Equity', perks: 'Superannuation compulsória (11.5%), auxílio educação/conferências' },
+            { flag: '🇧🇷', name: 'Brasil', local: 'R$ 180.000 – R$ 300.000 BRL', usd: '$32k – $54k', mix: '65% Base / 20% PLR / 15% Options/LTI', perks: 'CLT/PJ flexível, seguro saúde Premium, auxílio home office, PLR semestral' },
+            { flag: '🇲🇽', name: 'México', local: '$750.000 – $1.300.000 MXN', usd: '$38k – $66k', mix: '70% Base / 20% Aguinaldo/Bônus / 10% Equity', perks: 'Gastos Médicos Mayores (SGMM), Fondo de Ahorro, vales de despensa' },
+            { flag: '🇯🇵', name: 'Japão', local: '¥9.500.000 – ¥16.000.000 JPY', usd: '$62k – $105k', mix: '75% Base / 20% Bônus Anual / 5% Stock', perks: 'Subsídio de transporte (Commuter), seguro saúde nacional integrativo' },
+            { flag: '🇨🇳', name: 'China', local: '¥380.000 – ¥750.000 CNY', usd: '$53k – $104k', mix: '60% Base / 30% Bônus Desempenho / 10% Equity', perks: 'Housing Fund (Gongjijin), seguro saúde privado, subsídio alimentação' }
+        ],
+        head: [
+            { flag: '🇺🇸', name: 'Estados Unidos', local: '$220.000 – $380.000+ USD', usd: '$220k – $380k+', mix: '40% Base / 20% Bônus / 40% RSUs', perks: 'Pacote de RSUs / Options de executivo C-Level, retenção de vesting de 4 anos' },
+            { flag: '🇩🇪', name: 'Alemanha', local: '€130.000 – €210.000 EUR', usd: '$140k – $228k', mix: '65% Base / 25% Bônus Metas / 10% Phantom Equity', perks: 'Carro executivo da empresa, previdência privada corporativa estendida' },
+            { flag: '🇬🇧', name: 'Reino Unido', local: '£120.000 – £200.000 GBP', usd: '$152k – $253k', mix: '60% Base / 20% Bônus / 20% LTIP/Equity', perks: 'Executive Private Medical, LTIP (Long-Term Incentive Plan) executivo' },
+            { flag: '🇦🇺', name: 'Austrália', local: '$200.000 – $320.000 AUD', usd: '$131k – $210k', mix: '70% Base / 15% Bônus / 15% Equity', perks: 'Superannuation estendida, seguro de renda executivo, estipêndio de viagem' },
+            { flag: '🇧🇷', name: 'Brasil', local: 'R$ 320.000 – R$ 600.000 BRL', usd: '$58k – $108k', mix: '55% Base / 30% PLR de Diretoria / 15% LTI', perks: 'Bônus por metas globais/P&L, seguro saúde de diretoria, blindagem jurídica' },
+            { flag: '🇲🇽', name: 'México', local: '$1.400.000 – $2.500.000 MXN', usd: '$71k – $127k', mix: '60% Base / 30% Bônus / 10% Stock', perks: 'SGMM Familiar executivo, carro de diretoria, planos de aposentadoria privada' },
+            { flag: '🇯🇵', name: 'Japão', local: '¥17.000.000 – ¥28.000.000 JPY', usd: '$111k – $183k', mix: '65% Base / 25% Bônus Diretoria / 10% Equity', perks: 'Pacote executivo de saúde e previdência, subsídio de habitação executiva' },
+            { flag: '🇨🇳', name: 'China', local: '¥800.000 – ¥1.600.000 CNY', usd: '$111k – $222k', mix: '50% Base / 35% Bônus / 15% Options', perks: 'Pacote de remuneração variável agressivo, seguro médico internacional' }
+        ]
+    };
+
+    let currentSalaryRole = 'lead';
+
+    function renderSalaryTable() {
+        const tbody = document.getElementById('salaryTableBody');
+        if (!tbody) return;
+        const data = salaryData[currentSalaryRole];
+        tbody.innerHTML = data.map(item => `
+            <tr class="hover:bg-slate-50/80 transition-all">
+                <td class="py-3.5 px-4 font-bold text-slate-900 flex items-center gap-2">
+                    <span class="text-xl">${item.flag}</span>
+                    <span>${item.name}</span>
+                </td>
+                <td class="py-3.5 px-4 text-slate-800 font-semibold">${item.local}</td>
+                <td class="py-3.5 px-4"><span class="px-2.5 py-1 bg-emerald-100 text-emerald-800 font-bold rounded-md text-xs">${item.usd}</span></td>
+                <td class="py-3.5 px-4 text-xs text-slate-600">${item.mix}</td>
+                <td class="py-3.5 px-4 text-xs text-slate-500 italic">${item.perks}</td>
+            </tr>
+        `).join('');
+    }
+
+    function toggleSalaryRole(role) {
+        currentSalaryRole = role;
+        const btnLead = document.getElementById('btnSalaryLead');
+        const btnHead = document.getElementById('btnSalaryHead');
+        if (role === 'lead') {
+            btnLead.className = 'px-4 py-2 rounded-lg bg-white text-slate-900 shadow-sm transition-all font-bold';
+            btnHead.className = 'px-4 py-2 rounded-lg text-slate-600 hover:text-slate-900 transition-all font-normal';
+        } else {
+            btnHead.className = 'px-4 py-2 rounded-lg bg-white text-slate-900 shadow-sm transition-all font-bold';
+            btnLead.className = 'px-4 py-2 rounded-lg text-slate-600 hover:text-slate-900 transition-all font-normal';
+        }
+        renderSalaryTable();
+    }
+
     window.onload = function() {
-        renderCountryGrid();
+        try {
+            renderCountryGrid();
+            renderSalaryTable();
 
-        // Label Wrapping Helper for Charts
-        const wrapLabel = (label) => {
-            if (typeof label !== 'string') return label;
-            if (label.length <= 16) return label;
-            const words = label.split(' ');
-            const lines = [];
-            let currentLine = '';
-            words.forEach(word => {
-                if ((currentLine + word).length > 16) {
-                    lines.push(currentLine.trim());
-                    currentLine = word + ' ';
-                } else {
-                    currentLine += word + ' ';
-                }
-            });
-            lines.push(currentLine.trim());
-            return lines;
-        };
-
-        const tooltipOptions = {
-            callbacks: {
-                title: function(tooltipItems) {
-                    const item = tooltipItems[0];
-                    let label = item.chart.data.labels[item.dataIndex];
-                    return Array.isArray(label) ? label.join(' ') : label;
-                }
-            }
-        };
-
-        // Chart.js: Radar Comparison
-        const radarCtx = document.getElementById('radarChart').getContext('2d');
-        new Chart(radarCtx, {
-            type: 'radar',
-            data: {
-                labels: [
-                    wrapLabel('Governança Corporativa'),
-                    wrapLabel('Velocidade de Execução'),
-                    wrapLabel('Gestão de Riscos'),
-                    wrapLabel('Orientação a Dados'),
-                    wrapLabel('Estabilidade P&L'),
-                    wrapLabel('Inovação de Produto')
-                ],
-                datasets: [{
-                    label: 'Empresas Tradicionais',
-                    data: [95, 40, 90, 50, 95, 45],
-                    backgroundColor: 'rgba(30, 58, 138, 0.2)',
-                    borderColor: '#1e3a8a',
-                    pointBackgroundColor: '#1e3a8a',
-                    borderWidth: 2
-                }, {
-                    label: 'Empresas de Tecnologia',
-                    data: [50, 95, 55, 95, 60, 98],
-                    backgroundColor: 'rgba(45, 212, 191, 0.2)',
-                    borderColor: '#2dd4bf',
-                    pointBackgroundColor: '#2dd4bf',
-                    borderWidth: 2
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    tooltip: tooltipOptions,
-                    legend: { position: 'bottom' }
-                },
-                scales: {
-                    r: {
-                        angleLines: { display: true },
-                        suggestedMin: 0,
-                        suggestedMax: 100
-                    }
-                }
-            }
-        });
-
-        // Chart.js: Salary Composition
-        const barCtx = document.getElementById('barChart').getContext('2d');
-        new Chart(barCtx, {
-            type: 'bar',
-            data: {
-                labels: ['Tecnologia', 'Tradicional'],
-                datasets: [
-                    {
-                        label: 'Salário Base',
-                        data: [40, 70],
-                        backgroundColor: '#1e3a8a'
+            // Safe initialization for Radar Chart
+            const radarCanvas = document.getElementById('radarChart');
+            if (radarCanvas && typeof Chart !== 'undefined') {
+                const radarCtx = radarCanvas.getContext('2d');
+                new Chart(radarCtx, {
+                    type: 'radar',
+                    data: {
+                        labels: [
+                            'Governança Corporativa',
+                            'Velocidade de Execução',
+                            'Gestão de Riscos',
+                            'Orientação a Dados',
+                            'Estabilidade P&L',
+                            'Inovação de Produto'
+                        ],
+                        datasets: [{
+                            label: 'Empresas Tradicionais',
+                            data: [95, 40, 90, 50, 95, 45],
+                            backgroundColor: 'rgba(30, 58, 138, 0.2)',
+                            borderColor: '#1e3a8a',
+                            pointBackgroundColor: '#1e3a8a',
+                            borderWidth: 2
+                        }, {
+                            label: 'Empresas de Tecnologia',
+                            data: [50, 95, 55, 95, 60, 98],
+                            backgroundColor: 'rgba(45, 212, 191, 0.2)',
+                            borderColor: '#2dd4bf',
+                            pointBackgroundColor: '#2dd4bf',
+                            borderWidth: 2
+                        }]
                     },
-                    {
-                        label: 'Bônus Variável',
-                        data: [20, 25],
-                        backgroundColor: '#3b82f6'
-                    },
-                    {
-                        label: 'Equity / RSUs',
-                        data: [40, 5],
-                        backgroundColor: '#2dd4bf'
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { position: 'bottom' }
+                        },
+                        scales: {
+                            r: {
+                                angleLines: { display: true },
+                                suggestedMin: 0,
+                                suggestedMax: 100
+                            }
+                        }
                     }
-                ]
-            },
-            options: {
-                indexAxis: 'y',
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    x: { stacked: true, max: 100 },
-                    y: { stacked: true }
-                },
-                plugins: {
-                    tooltip: tooltipOptions,
-                    legend: { position: 'bottom' }
-                }
+                });
             }
-        });
 
-        // Plotly.js: Complex Statistical Summary
-        const plotlyData = [
-            {
-                type: 'scatter',
-                mode: 'markers+text',
-                x: [25, 30, 40, 45, 65, 75, 90, 95],
-                y: [95, 92, 85, 78, 45, 35, 15, 15],
-                text: ['EUA (Tech)', 'China (Tech)', 'Brasil (Tech)', 'México (Tech)', 'Brasil (T)', 'EUA (T)', 'Japão (T)', 'Alemanha (T)'],
-                textposition: 'top center',
-                marker: {
-                    size: [30, 32, 26, 24, 16, 18, 20, 22],
-                    color: ['#2dd4bf', '#2dd4bf', '#2dd4bf', '#2dd4bf', '#1e3a8a', '#1e3a8a', '#1e3a8a', '#1e3a8a'],
-                    opacity: 0.8
-                }
+            // Safe initialization for Bar Chart
+            const barCanvas = document.getElementById('barChart');
+            if (barCanvas && typeof Chart !== 'undefined') {
+                const barCtx = barCanvas.getContext('2d');
+                new Chart(barCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Tecnologia', 'Tradicional'],
+                        datasets: [
+                            {
+                                label: 'Salário Base',
+                                data: [40, 70],
+                                backgroundColor: '#1e3a8a'
+                            },
+                            {
+                                label: 'Bônus Variável',
+                                data: [20, 25],
+                                backgroundColor: '#3b82f6'
+                            },
+                            {
+                                label: 'Equity / RSUs',
+                                data: [40, 5],
+                                backgroundColor: '#2dd4bf'
+                            }
+                        ]
+                    },
+                    options: {
+                        indexAxis: 'y',
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: { stacked: true, max: 100 },
+                            y: { stacked: true }
+                        },
+                        plugins: {
+                            legend: { position: 'bottom' }
+                        }
+                    }
+                });
             }
-        ];
-
-        const plotlyLayout = {
-            title: 'Distribuição Global: Agilidade vs Estabilidade',
-            xaxis: { title: 'Índice de Estabilidade / Governança' },
-            yaxis: { title: 'Índice de Agilidade / Inovação' },
-            margin: { t: 50, b: 50, l: 50, r: 50 },
-            plot_bgcolor: 'rgba(0,0,0,0)',
-            paper_bgcolor: 'rgba(0,0,0,0)',
-            render: 'canvas'
-        };
-
-        Plotly.newPlot('plotlyChart', plotlyData, plotlyLayout, {responsive: true});
+        } catch (err) {
+            console.error("Erro durante a inicialização do dashboard:", err);
+        }
     };
 </script>
 
